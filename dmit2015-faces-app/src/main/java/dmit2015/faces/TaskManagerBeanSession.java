@@ -1,21 +1,17 @@
 package dmit2015.faces;
 
 import dmit2015.model.Task;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.omnifaces.util.Messages;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Session-scoped backing bean: per-user state that persists for the HTTP session.
@@ -24,6 +20,7 @@ import org.omnifaces.util.Messages;
 @Named("taskManagerBeanSession")
 @SessionScoped // Lives for the user's session; store only per-user state
 public class TaskManagerBeanSession implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = Logger.getLogger(TaskManagerBeanSession.class.getName());

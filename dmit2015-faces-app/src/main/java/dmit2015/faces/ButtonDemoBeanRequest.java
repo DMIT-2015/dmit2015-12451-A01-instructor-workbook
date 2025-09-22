@@ -1,13 +1,10 @@
 package dmit2015.faces;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.omnifaces.util.Messages;
+
+import java.util.logging.Logger;
 
 /**
  * Request-scoped backing bean: new instance per HTTP request.
