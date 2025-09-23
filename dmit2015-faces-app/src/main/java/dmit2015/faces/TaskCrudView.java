@@ -86,7 +86,7 @@ public class TaskCrudView implements Serializable {
         try {
             var faker = new Faker();
             selectedTask = Task.of(faker);
-
+            selectedTask.setId(selectedId);
         } catch (Exception e) {
             Messages.addGlobalError("Error generating data {0}", e.getMessage());
         }
