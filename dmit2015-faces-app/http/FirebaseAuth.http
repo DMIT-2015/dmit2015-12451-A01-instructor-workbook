@@ -1,0 +1,25 @@
+# curl 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]' 
+#-H 'Content-Type: application/json' 
+#--data-binary '{"email":"[user@example.com]","password":"[PASSWORD]","returnSecureToken":true}'
+POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{API_KEY}}
+Content-Type: application/json
+
+{
+  "email": "user01@dmit2015.ca",
+  "password": "Password2015",
+  "returnSecureToken": true
+}
+
+###
+# curl 'https://securetoken.googleapis.com/v1/token?key=[API_KEY]'
+#-H 'Content-Type: application/x-www-form-urlencoded'
+#--data 'grant_type=refresh_token&refresh_token=[REFRESH_TOKEN]'
+POST https://securetoken.googleapis.com/v1/token?key={{API_KEY}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = refresh_token &
+refresh_token = {{REFRESH_TOKEN}}
+
+###
+
+
