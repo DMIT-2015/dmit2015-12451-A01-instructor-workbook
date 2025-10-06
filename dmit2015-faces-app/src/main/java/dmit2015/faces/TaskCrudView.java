@@ -24,7 +24,7 @@ import java.util.List;
 public class TaskCrudView implements Serializable {
 
     @Inject
-    @Named("firebaseHttpClientTaskService")
+    @Named("jakartaPersistenceTaskService")
     private TaskService taskService;
 
     /**

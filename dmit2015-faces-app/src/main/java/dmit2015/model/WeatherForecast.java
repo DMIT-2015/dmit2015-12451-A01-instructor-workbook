@@ -1,5 +1,8 @@
 package dmit2015.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.datafaker.Faker;
@@ -9,8 +12,11 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@Entity
 public class WeatherForecast {
 
+    @Id
+    @Column(name = "weatherforecastid", nullable = false,  unique = true)
     private String id;
     private String city;
     private LocalDate date =  LocalDate.now().plusDays(1);
