@@ -16,7 +16,7 @@ import java.util.UUID;
 public class JakartaPersistenceWeatherForecastService implements WeatherForecastService {
 
     // Assign a unitName if there are more than one persistence unit defined in persistence.xml
-    @PersistenceContext //(unitName="pu-name-in-persistence.xml")
+    @PersistenceContext (unitName="postgresql-jpa-pu")
     private EntityManager entityManager;
 
     @Override

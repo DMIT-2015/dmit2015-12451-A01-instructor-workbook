@@ -23,6 +23,7 @@ public class Task {
     private String id;
 
     @NotBlank(message = "Description is required.")
+    @Column(length = 1024)
     private String description;
 
     private String priority;    // Low, Medium, High
