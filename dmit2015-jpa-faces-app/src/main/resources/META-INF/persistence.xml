@@ -27,19 +27,19 @@
             </properties>
         </persistence-unit>
 
-        <persistence-unit name="mssql-dmit2015-jpa-pu" transaction-type="JTA">
-            <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-            <jta-data-source>java:app/datasources/MSSQLServerDS</jta-data-source>
+<!--        <persistence-unit name="mssql-dmit2015-jpa-pu" transaction-type="JTA">-->
+<!--            <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+<!--            <jta-data-source>java:app/datasources/MSSQLServerDS</jta-data-source>-->
 
-            <!-- Data source to use with wildfly-datasources-galleon-pack
-                https://github.com/wildfly-extras/wildfly-datasources-galleon-pack -->
-        <!--        <jta-data-source>java:jboss/datasources/MSSQLServerDS</jta-data-source>-->
+<!--            &lt;!&ndash; Data source to use with wildfly-datasources-galleon-pack-->
+<!--                https://github.com/wildfly-extras/wildfly-datasources-galleon-pack &ndash;&gt;-->
+<!--        &lt;!&ndash;        <jta-data-source>java:jboss/datasources/MSSQLServerDS</jta-data-source>&ndash;&gt;-->
 
-            <properties>
-                <!-- database.action: none, create, drop-and-create, drop, validate -->
-                <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
-            </properties>
-        </persistence-unit>
+<!--            <properties>-->
+<!--                &lt;!&ndash; database.action: none, create, drop-and-create, drop, validate &ndash;&gt;-->
+<!--                <property name="jakarta.persistence.schema-generation.database.action" value="none"/>-->
+<!--            </properties>-->
+<!--        </persistence-unit>-->
 
         <persistence-unit name="postgresql-jpa-pu" transaction-type="JTA">
             <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
