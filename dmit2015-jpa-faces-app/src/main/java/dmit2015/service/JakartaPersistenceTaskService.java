@@ -83,4 +83,9 @@ public class JakartaPersistenceTaskService implements TaskService {
         }
     }
 
+    @Override
+    public void deleteAllTasks() {
+        entityManager.createQuery("DELETE FROM Task").executeUpdate();
+    }
+
 }
