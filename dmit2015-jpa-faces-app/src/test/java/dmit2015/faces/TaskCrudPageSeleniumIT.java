@@ -233,13 +233,12 @@ public class TaskCrudPageSeleniumIT {
         // setPrimeFacesDatePickerValue(field1Id, field1Value);
         setTextValue("dialogs:" + field2Id, field2Value);
 //        setTextValue("dialogs:" + field3Id, field3Value);
-//        WebElement checkboxElement = driver.findElement(
-//                By.cssSelector("#" + field3Id + " .ui-chkbox-box"));
-//        assertThat(checkboxElement).isNotNull();
-//        WebElement checkboxElement_input = driver.findElement(By.cssSelector("#" + field3Id));
-//        if (field3Value && !checkboxElement_input.isSelected()) {
-//            checkboxElement.click();
-//        }
+
+        WebElement checkboxElement = driver.findElement(By.cssSelector("#dialogs\\:" + field3Id + " .ui-chkbox-box"));
+        assertThat(checkboxElement).isNotNull();
+        if (field3Value && !checkboxElement.isSelected() ) {
+            checkboxElement.click();
+        }
 
         Thread.sleep(1000);
 

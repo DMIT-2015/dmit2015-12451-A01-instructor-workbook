@@ -107,7 +107,7 @@ public class JakartaPersistenceTaskServiceImplementationArquillianIT { // The cl
         taskService.createTask(newTask);
 
         // Assert
-        assertThat(newTask.getId())
+        assertThat(newTask.getCreateTime())
                 .isNotNull();
 
     }
