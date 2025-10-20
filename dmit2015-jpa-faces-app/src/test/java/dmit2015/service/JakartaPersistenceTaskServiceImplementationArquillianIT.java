@@ -219,34 +219,37 @@ public class JakartaPersistenceTaskServiceImplementationArquillianIT { // The cl
 
     }
 
-//    @Order(6)
-//    @ParameterizedTest
-//    @CsvSource(value = {
-//            ", High, true,Description is required.",
-//            "\t, High, true,Description is required.",
-//    }, nullValues = {"null"})
-//    void givenEntityWithValidationErrors_whenAddEntity_thenThrowException(
-//            String description,
-//            String priority,
-//            boolean done,
-//            String expectedExceptionMessage
-//    ) {
-//        // Arrange
-//        Task newTask = new Task();
-//        newTask.setDescription(description);
-//        newTask.setPriority(priority);
-//        newTask.setDone(done);
-//
-//        try {
-//            // Act
-//            taskService.createTask(newTask);
-//            fail("An bean validation constraint should have been thrown");
-//        } catch (Exception ex) {
-//            // Assert
-//            assertThat(ex)
-//                    .hasMessageContaining(expectedExceptionMessage);
-//        }
-//
-//    }
+    @Order(6)
+    @ParameterizedTest
+    @CsvSource(value = {
+            ", High, true,Description is required.",
+            "\t, Medium, false,Description is required.",
+            "Priority Validation, None, false,'Priority must be Low, Medium, or High'",
+            "Valid Description, Low, false,null",
+    }, nullValues = {"null"})
+    void givenEntityWithValidationErrors_whenAddEntity_thenThrowException(
+            String description,
+            String priority,
+            boolean done,
+            String expectedExceptionMessage
+    ) {
+        // Arrange
+        Task newTask = new Task();
+        newTask.setDescription(description);
+        newTask.setPriority(priority);
+        newTask.setDone(done);
+
+        try {
+            // Act
+            taskService.createTask(newTask);
+            System.out.println("New Task:" + newTask.getDescription());
+            fail("An bean validation constraint should have been thrown");
+        } catch (Exception ex) {
+            // Assert
+            assertThat(ex)
+                    .hasMessageContaining(expectedExceptionMessage);
+        }
+
+    }
 
 }

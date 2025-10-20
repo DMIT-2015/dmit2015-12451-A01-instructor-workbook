@@ -125,11 +125,13 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="@next">Date</p:outputLabel>
-                                <p:inputText
+                                <p:datePicker
                                         id="date"
+                                        pattern="yyyy-MM-dd"
+                                        showIcon="true"
                                         value="#{currentWeatherForecastCrudView.selectedWeatherForecast.date}">
-                                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
-                                </p:inputText>
+
+                                </p:datePicker>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="@next">Celsius</p:outputLabel>

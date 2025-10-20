@@ -9,13 +9,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.primefaces.selenium.component.DatePicker;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -115,18 +119,55 @@ public class WeatherForecastCrudPageSeleniumIT {
         element.sendKeys(fieldValue);
     }
 
-    private void setPrimeFacesDatePickerValue(String fieldId, String fieldValue) {
+    /** Works for PF 15.0.8 DatePicker inside a PrimeFaces <p:dialog>. */
+    private void setWeatherDialogDate(String baseIdWithoutSuffix, String yyyyMMdd) {
+        // ex: baseIdWithoutSuffix = "dialogs:date"
+        final By inputBy = By.id(baseIdWithoutSuffix + "_input");
+        final By panelBy = By.id(baseIdWithoutSuffix + "_panel");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+
+        // 1) Type the value into the DatePicker's text input
+        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(inputBy));
+        input.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        input.sendKeys(yyyyMMdd);
+
+        // 2) Click the dialog's titlebar (safe outside target) to close the popup
+        //    We locate the closest '.ui-dialog' (PF legacy) or '.p-dialog' (PrimeOne) and click its header.
+        ((JavascriptExecutor) driver).executeScript(
+                "const input = document.getElementById(arguments[0]);" +
+                        "if(!input) return;" +
+                        "let dlg = input.closest('.ui-dialog, .p-dialog');" +
+                        "let header = dlg && (dlg.querySelector('.ui-dialog-titlebar, .p-dialog-header'));" +
+                        "let target = header || dlg || document.body;" +  // fallbacks if theme differs
+                        // dispatch a real click sequence on the non-input header
+                        "[ 'mousedown','mouseup','click' ].forEach(t => target.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true})));",
+                baseIdWithoutSuffix + "_input"
+        );
+
+        // 3) Wait for the date panel overlay to be truly gone
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(panelBy));
+
+        // 4) (Optional) ensure focus is no longer on the input, to avoid re-opening
+        wait.until(d -> {
+            Object activeId = ((JavascriptExecutor) d).executeScript("return document.activeElement && document.activeElement.id;");
+            return activeId == null || !String.valueOf(activeId).equals(baseIdWithoutSuffix + "_input");
+        });
+    }
+
+    private void setPrimeFacesDatePickerValue(String fieldId, String fieldValue) throws InterruptedException {
         // The text field for the p:datePicker component has a suffix of "_input" appended to the end of the field id.
         final String datePickerTextFieldId = String.format("%s_input", fieldId);
         WebElement element = driver.findElement(By.id(datePickerTextFieldId));
 
-        element.sendKeys(Keys.chord(Keys.ESCAPE));
-
+        element.sendKeys(Keys.chord(Keys.CONTROL + "a"));
         element.sendKeys(fieldValue);
-        element.sendKeys(Keys.chord(Keys.TAB));
+
+        Thread.sleep(1000);
+        element.click();
     }
 
-    private void setPrimeFacesSelectOneMenuValue(String fieldId, String fieldValue) {
+    private void setPrimeFacesSelectOneMenuValue(String fieldId, String fieldValue) throws InterruptedException {
         // The id of the element to click for p:selectOneMenu has a suffix of "_label" appended to the id of the p:selectOneMenu
         String selectOneMenuId = String.format("%s_label", fieldId);
         driver.findElement(By.id(selectOneMenuId)).click();
@@ -138,6 +179,7 @@ public class WeatherForecastCrudPageSeleniumIT {
         // The value for each item is stored a attribute named "data-label"
         String selectItemXPath = String.format("//*[@data-label=\"%s\"]", fieldValue);
         var selectItem = selectOneMenuItems.findElement(By.xpath(selectItemXPath));
+        Thread.sleep(1000);
         selectItem.click();
     }
 
@@ -203,9 +245,9 @@ public class WeatherForecastCrudPageSeleniumIT {
     @Order(1)
     @ParameterizedTest
     @CsvSource(value = {
-            "city, Edmonton, date, 2025-10-16, temperatureCelsius, -5",
-            "city, Calgary, date, 2025-10-16, temperatureCelsius, -10",
-            "city, Vancouver, date, 2025-10-16, temperatureCelsius, 10",
+            "city, Edmonton, date, 2025-12-16, temperatureCelsius, -5",
+            "city, Calgary, date, 2025-12-16, temperatureCelsius, -10",
+            "city, Vancouver, date, 2025-12-16, temperatureCelsius, 10",
     })
     void shouldCreate(
             String field1Id, String field1Value,
@@ -230,8 +272,8 @@ public class WeatherForecastCrudPageSeleniumIT {
         // Add suffix `_input` for p:inputNumber
         setTextValue("dialogs:" + field1Id, field1Value);
         // setPrimeFacesSelectOneMenuValue(field2Id, field2Value);
-        // setPrimeFacesDatePickerValue(field1Id, field1Value);
-        setTextValue("dialogs:" + field2Id, field2Value);
+         setPrimeFacesDatePickerValue("dialogs:" + field2Id, field2Value);
+
         setTextValue("dialogs:" + field3Id, field3Value);
 
         Thread.sleep(1000);
@@ -264,9 +306,9 @@ public class WeatherForecastCrudPageSeleniumIT {
     @Order(2)
     @ParameterizedTest
     @CsvSource({
-            "0,Edmonton,'Oct 16, 2025',-5",
-            "1,Calgary,'Oct 16, 2025',-10",
-            "2,Vancouver,'Oct 16, 2025', 10",
+            "0,Edmonton,'Dec 16, 2025',-5",
+            "1,Calgary,'Dec 16, 2025',-10",
+            "2,Vancouver,'Dec 16, 2025', 10",
     })
     void shouldList(
             int idIndex,

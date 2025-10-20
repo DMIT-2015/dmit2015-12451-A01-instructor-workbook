@@ -6,6 +6,7 @@ import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class JakartaPersistenceTaskService implements TaskService {
 
     @Override
     @Transactional
-    public Task createTask(Task task) {
+    public Task createTask(@Valid Task task) {
         // If the primary key is not an identity column then write code below here to
         // 1) Generate a new primary key value
         // 2) Set the primary key value for the new entity
@@ -52,7 +53,7 @@ public class JakartaPersistenceTaskService implements TaskService {
 
     @Override
     @Transactional
-    public Task updateTask(Task task) {
+    public Task updateTask(@Valid Task task) {
 
         Optional<Task> optionalTask = getTaskById(task.getId());
         if (optionalTask.isEmpty()) {

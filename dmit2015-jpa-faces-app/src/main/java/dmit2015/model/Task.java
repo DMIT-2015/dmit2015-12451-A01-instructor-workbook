@@ -2,6 +2,7 @@ package dmit2015.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import net.datafaker.Faker;
@@ -38,6 +39,7 @@ public class Task implements Serializable {
     @Column(length = 1024)
     private String description;
 
+    @Pattern(regexp = "(?i)^(Low|Medium|High)$", message="Priority must be Low, Medium, or High")
     private String priority;    // Low, Medium, High
     private boolean done;
 
