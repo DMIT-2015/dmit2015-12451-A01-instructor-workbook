@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.omnifaces.util.Messages;
 
 /**
@@ -32,7 +33,7 @@ public class EmployeeQueryView implements Serializable {
     @Inject
     private HumanResourcesRepository hrRepository;
 
-    @Getter
+    @Getter @Setter
     private Department selectedDepartment;
 
     @Getter
