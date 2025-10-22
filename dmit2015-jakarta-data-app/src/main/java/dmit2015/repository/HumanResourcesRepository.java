@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository(dataStore = "oracle-jpa-hr-pu")
-public interface HumanResourcesRepository extends Serializable {
+public interface HumanResourcesRepository {
     @Query("select d from Department d where lower(d.departmentName) like lower(?1) order by d.departmentName")
     List<Department> departmentsBy(String departmentName);
 

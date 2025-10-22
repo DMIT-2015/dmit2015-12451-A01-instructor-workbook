@@ -32,7 +32,6 @@
                 />
                         </div>
 
-
                         <!-- Buttons for form submission and clearing -->
                         <div class="formgroup-inline">
                             <div class="field">
@@ -52,9 +51,6 @@
                     </div>
                 </p:panel>
             </h:form>
-
-            <!-- === Data Table for Displaying Records === -->
-            <!-- Ensure rowKey references a unique property in your data model -->
 
             <h:form id="dataTableForm">
                 <div class="card">
@@ -82,6 +78,13 @@
                             </h:outputText>
                         </p:column>
 
+                        <p:column headerText="Department">
+                            <h:outputText value="#{it.department.departmentName}" />
+                        </p:column>
+
+                        <p:column headerText="Manager">
+                            <h:outputText value="#{(empty it.manager) ? 'No Manager' : it.manager.fullName}" />
+                        </p:column>
                     </p:dataTable>
 
                 </div>

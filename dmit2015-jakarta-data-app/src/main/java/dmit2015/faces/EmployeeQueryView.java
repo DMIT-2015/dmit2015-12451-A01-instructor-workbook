@@ -31,7 +31,7 @@ public class EmployeeQueryView implements Serializable {
     private static final Logger LOG = Logger.getLogger(EmployeeQueryView.class.getName());
 
     @Inject
-    private HumanResourcesRepository hrRepository;
+    private transient HumanResourcesRepository hrRepository;
 
     @Getter @Setter
     private Department selectedDepartment;
