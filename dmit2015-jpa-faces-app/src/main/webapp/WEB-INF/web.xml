@@ -4,6 +4,23 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/errorpages/401.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/errorpages/403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errorpages/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorpages/500.xhtml?fromErrorPage=true</location>
+    </error-page>
+
     <security-role>
         <role-name>Sales</role-name>
     </security-role>
