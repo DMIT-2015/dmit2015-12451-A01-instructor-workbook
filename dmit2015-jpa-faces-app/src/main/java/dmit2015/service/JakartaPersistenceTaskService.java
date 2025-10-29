@@ -2,9 +2,11 @@ package dmit2015.service;
 
 import dmit2015.model.Task;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -15,6 +17,9 @@ import java.util.UUID;
 @Named("jakartaPersistenceTaskService")
 @ApplicationScoped
 public class JakartaPersistenceTaskService implements TaskService {
+
+    @Inject
+    private SecurityContext _securityContext;
 
     // Assign a unitName if there are more than one persistence unit defined in persistence.xml
     @PersistenceContext (unitName="postgresql-jpa-pu")
@@ -27,6 +32,11 @@ public class JakartaPersistenceTaskService implements TaskService {
         // 1) Generate a new primary key value
         // 2) Set the primary key value for the new entity
         task.setId(UUID.randomUUID().toString());
+        String username = _securityContext.getCallerPrincipal().getName();
+        if (username.equalsIgnoreCase("anonymous")) {
+            throw new RuntimeException("Access denied. Anonymous users are not allowed.");
+        }
+        task.setUsername(username);
         entityManager.persist(task);
         return task;
     }
@@ -47,6 +57,16 @@ public class JakartaPersistenceTaskService implements TaskService {
 
     @Override
     public List<Task> getAllTasks() {
+        if (!(_securityContext.isCallerInRole("Sales")
+            || _securityContext.isCallerInRole("Shipping"))) {
+            throw new RuntimeException("Access denied. Role not allowed.");
+        }
+        if (_securityContext.isCallerInRole("Sales")) {
+            String username = _securityContext.getCallerPrincipal().getName();
+            return entityManager.createQuery("SELECT o FROM Task o where o.username = :usernameValue", Task.class)
+                    .setParameter("usernameValue", username)
+                    .getResultList();
+        }
         return entityManager.createQuery("SELECT o FROM Task o ", Task.class)
                 .getResultList();
     }
