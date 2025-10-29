@@ -4,6 +4,7 @@
         xmlns:faces="jakarta.faces"
         xmlns:ui="jakarta.faces.facelets"
         xmlns:f="jakarta.faces.core"
+        xmlns:c="jakarta.tags.core"
         xmlns:h="jakarta.faces.html"
         xmlns:p="primefaces"
         xmlns:o="http://omnifaces.org/ui"
@@ -44,6 +45,12 @@
                             <p:menuitem value="Manage WeatherForecast"
                                         outcome="/weatherforecasts/manage" />
 
+                            <c:if test="${not empty request.userPrincipal}">
+                                <p:menuitem value="Logout #{request.userPrincipal.name}" action="#{oidcLogout.submit}" />
+                            </c:if>
+                            <c:if test="${empty request.userPrincipal}">
+                                <p:menuitem value="Login" outcome="/tasks/crud-tasks.xhtml" />
+                            </c:if>
 
                             <!-- Example submenu scaffold
                             <p:submenu label="Students" icon="pi pi-users">
