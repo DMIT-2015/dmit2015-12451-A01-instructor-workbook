@@ -45,6 +45,8 @@
                             <p:menuitem value="Manage WeatherForecast"
                                         outcome="/weatherforecasts/manage" />
 
+                            <p:menuitem value="Manage Students" outcome="/students/manage" />
+
                             <c:if test="${not empty request.userPrincipal}">
                                 <p:menuitem value="Logout #{request.userPrincipal.name}" action="#{oidcLogout.submit}" />
                             </c:if>

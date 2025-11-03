@@ -4,23 +4,6 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <error-page>
-        <error-code>401</error-code>
-        <location>/WEB-INF/errorpages/401.xhtml</location>
-    </error-page>
-    <error-page>
-        <error-code>403</error-code>
-        <location>/WEB-INF/errorpages/403.xhtml</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/errorpages/404.xhtml</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/errorpages/500.xhtml?fromErrorPage=true</location>
-    </error-page>
-
     <security-role>
         <role-name>Sales</role-name>
     </security-role>
@@ -31,36 +14,46 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>SalesAndShippingResources</web-resource-name>
+            <web-resource-name>TaskResources</web-resource-name>
             <url-pattern>/tasks/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>Sales</role-name>
             <role-name>Shipping</role-name>
+            <role-name>Sales</role-name>
         </auth-constraint>
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>ShippingResources</web-resource-name>
+            <web-resource-name>WeatherResources</web-resource-name>
             <url-pattern>/weatherforecasts/manage.xhtml</url-pattern>
             <url-pattern>/weatherforecasts/manage</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>Shipping</role-name>
+            <role-name>Sales</role-name>
         </auth-constraint>
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>EnableHttps</web-resource-name>
+            <web-resource-name>StudentsResources</web-resource-name>
+            <url-pattern>/students/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Shipping</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>Use HTTPS only</display-name>
+        <web-resource-collection>
+            <web-resource-name>sslResources</web-resource-name>
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
 
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
@@ -89,6 +82,25 @@
     </servlet-mapping>
     -->
 
-
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/errorpages/401.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/errorpages/403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errorpages/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorpages/500.xhtml?fromErrorPage=true</location>
+    </error-page>
+    <error-page>
+        <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
+        <location>/WEB-INF/errorpages/expired.xhtml</location>
+    </error-page>
 
 </web-app>
