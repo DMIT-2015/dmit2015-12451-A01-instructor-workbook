@@ -173,6 +173,15 @@
             <version>3.27.6</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile</artifactId>
+            <version>7.0</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -217,6 +226,7 @@
                         <layer>microprofile-config</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>microprofile-openapi</layer>
+                        <layer>microprofile-jwt</layer>
                     </layers>
 
                     <!-- deploys the app on root web context -->
