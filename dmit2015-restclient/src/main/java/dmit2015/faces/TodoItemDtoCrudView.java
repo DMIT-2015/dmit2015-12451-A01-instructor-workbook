@@ -23,6 +23,9 @@ import java.util.List;
 public class TodoItemDtoCrudView implements Serializable {
 
     @Inject
+    private LoginSession _loginSession;
+
+    @Inject
     @Named("currentMpRestClientTodoItemDtoService")
     private TodoItemDtoService todoItemDtoService;
 

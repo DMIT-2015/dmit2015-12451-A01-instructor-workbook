@@ -42,7 +42,7 @@ public class TodoItemDtoResource {
     @Inject
     private TodoItemRepository todoItemRepository;
 
-//    @RolesAllowed({"Sales","Shipping","IT"})
+    @RolesAllowed({"Sales","Shipping","IT"})
     @GET    // This method only accepts HTTP GET requests.
     public Response findAllTodoItemsTodoItems() {
         String username = optionalUsername.getValue().orElseThrow();

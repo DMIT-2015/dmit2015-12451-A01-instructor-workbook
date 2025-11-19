@@ -191,6 +191,10 @@
                     <debugPort>8787</debugPort>
                     <debugSuspend>false</debugSuspend>
 
+                    <layers>
+                        <layer>microprofile-jwt</layer>
+                    </layers>
+
                 </configuration>
             </plugin>
         </plugins>
